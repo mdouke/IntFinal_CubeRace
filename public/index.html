@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>p5MediaPipeHands Pose Landmarker</title>
+  <!--three.jsを読み込む-->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+      }
+    }
+  </script>
+  <!-- index.jsを読み込む -->
+  <script type="module" src="./js/three.js"></script>
+</head>
+
+<body>
+
+
+  <body>
+    <h1>Pose Landmarker</h1>
+    <p id="message" hidden></p>
+    <p id="messages"></p>
+
+
+    <button id="webcamButton" disabled>
+      ENABLE WEBCAM
+    </button>
+    <div style="position: relative;">
+      <video id="webcam" style="position:absolute;left:0px;top:0px;width:300px;height:auto" autoplay playsinline></video>
+      <div id="canvas" style="position:absolute;left:0px;top:0px">
+      </div>
+      <canvas id="myCanvas" style="position:absolute;left:0px;top:200px;"></canvas>
+    </div>
+    
+
+    <!-- include js libraries -->
+    <script src="./js/p5.js"></script>
+    <script src="./js/sketch.js"></script>
+    <script type="module" src="./js/script.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on('connect', () => {
+      console.log('Connected to server:', socket.id);
+      });
+
+      socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+      });
+
+      socket.on('wait', () => {
+        console.log('Waiting for another user to connect');
+      });
+
+      socket.on('start', () => {
+        document.getElementById('messages').innerText = "カメラを開いて、顔の上で丸を作ってください";
+      });
+
+    </script>
+
+  </body>
+
+</html>
